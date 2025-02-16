@@ -1,0 +1,17 @@
+name: Main Runner
+
+on:
+  schedule:
+    - cron: "0 15 * * *"  # Placeholder cron, gets updated dynamically
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Sample Command
+        run: echo "Hello from Main Runner"
+
+      - name: Disable Itself After Running
+        run: gh workflow disable main-runner.yaml
+        env:
+          GH_TOKEN: ${{ secrets.GH_CLASSIC_TOKEN }}
