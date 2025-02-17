@@ -3,6 +3,10 @@ name: Trigger Creator
 on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
+permissions:
+  contents: write
+  workflows: write
+
 jobs:
   update-cron:
     runs-on: ubuntu-latest
