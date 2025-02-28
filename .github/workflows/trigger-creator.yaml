@@ -3,12 +3,18 @@ name: Trigger Creator
 on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
+permissions:
+  contents: write
+  workflows: write
+
 jobs:
   update-cron:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_CLASSIC_TOKEN }}  # Use Classic PAT for Git operations
 
       - name: Enable Main Workflow
         run: gh workflow enable main-runner.yaml
@@ -35,11 +41,8 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions"
+          git config --global user.name "github-actions[bot]"
           git config --global user.email "actions@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_CLASSIC_TOKEN }}@github.com/${{ github.repository }}.git
           git add .github/workflows/main-runner.yaml
           git commit -m "Update main-runner cron to: ${NEW_CRON}"
           git push origin main
-        env:
-          GH_CLASSIC_TOKEN: ${{ secrets.GH_CLASSIC_TOKEN }}
