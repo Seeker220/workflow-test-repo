@@ -2,7 +2,7 @@ name: Main Runner
 
 on:
   schedule:
-    - cron: "0 15 * * *"  # Placeholder cron, gets updated dynamically
+    - cron: "31 20 * * *"  # Placeholder cron, gets updated dynamically
 
 jobs:
   run-task:
